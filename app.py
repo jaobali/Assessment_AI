@@ -1,0 +1,18 @@
+import streamlit as st
+
+st.set_page_config(
+    page_title="Principal",
+    page_icon="👋",
+)
+
+st.write("# Bem-vindo ao Assessment AI! 👋")
+
+st.sidebar.success("Selecione uma demonstração acima.")
+
+st.markdown(
+    '''
+    **👈 Selecione uma demonstração na barra lateral** para conhecer as funcionalidades do Assessment AI.
+    ### Quer saber mais?
+    - Visite nosso [repositório no GitHub](https://github.com/JooManc/Assessment_AI)
+'''
+)
