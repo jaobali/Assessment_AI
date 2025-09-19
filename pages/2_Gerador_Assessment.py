@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from agents.agent_gerador_assessment import gerar_perguntas, gerar_niveis_maturidade
 
 # Interface Streamlit simplificada para demonstração
@@ -46,45 +47,27 @@ if st.session_state.current_page == "assessment":
         
         # Botão para gerar níveis de maturidade
         if st.button("Gerar Níveis de Maturidade"):
-            st.session_state.niveis = gerar_niveis_maturidade(area=area, qtd_perguntas=qtd_perguntas, perguntas=st.session_state.perguntas)
+            st.session_state.niveis = gerar_niveis_maturidade(area=area, perguntas=st.session_state.perguntas)
         
         # Exibir níveis se foram gerados
         if st.session_state.niveis is not None:
             st.subheader("Níveis de Maturidade")
             st.write(st.session_state.niveis)
 
-
-# Página de Chat
-elif st.session_state.current_page == "chat":
-    st.title("Chat com IA")
-    st.markdown("""Converse com nossa IA para tirar dúvidas sobre o assessment de maturidade Lean ou sobre metodologias Lean em geral.""")
-    
-    # Exibir mensagens anteriores
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-    
-    # Input para nova mensagem
-    if prompt := st.chat_input("Digite sua mensagem aqui..."):
-        # Adicionar mensagem do usuário ao histórico
-        st.session_state.messages.append({"role": "user", "content": prompt})
+            # Botão para gerar Excel
+            if st.button("Gerar Excel"):
+                try:
+                    # Caminho para salvar o arquivo
+                    save_path = os.path.join("Assessments", f"assessment_{area}.xlsx")
+                    
+                    # Salvar o DataFrame em um arquivo Excel
+                    st.session_state.niveis.to_excel(save_path, index=False)
+                    
+                    st.success(f"Arquivo salvo com sucesso em: {save_path}")
+                except Exception as e:
+                    st.error(f"Ocorreu um erro ao salvar o arquivo: {e}")
         
-        # Exibir mensagem do usuário
-        with st.chat_message("user"):
-            st.markdown(prompt)
         
-        # Mostrar indicador de carregamento enquanto processa a resposta
-        with st.chat_message("assistant"):
-            with st.spinner("Pensando..."):
-                # Chamar a função de chat com IA para obter uma resposta
-                response = chat_with_ai(st.session_state.messages)
-        
-        # Adicionar resposta da IA ao histórico
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        
-        # Exibir resposta da IA
-        with st.chat_message("assistant"):
-            st.markdown(response)
 
 # Footer
 st.sidebar.markdown("---")
