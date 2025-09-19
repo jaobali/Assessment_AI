@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import glob
 import pandas as pd
-from agent_avaliador import gerador_mensagem_chat, perguntas_avaliar, nota
+from agents.agent_avaliador import gerador_mensagem_chat, perguntas_avaliar, nota
 
 from dotenv import load_dotenv
 load_dotenv()
