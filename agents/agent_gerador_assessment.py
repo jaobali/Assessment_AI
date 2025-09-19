@@ -1,13 +1,6 @@
-from agno.agent import Agent, RunResponse
+from agno.agent import Agent
 from agno.models.openai import OpenAIChat
-from agno.tools.tavily import TavilyTools
-from agno.tools.file import FileTools
-from agno.playground import Playground, serve_playground_app
 
-import json
-import os
-import pandas as pd
-from textwrap import dedent
 from typing import List, Dict
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
@@ -26,9 +19,9 @@ class NiveisMaturidade(BaseModel):
         description="Lista com 5 níveis de maturidade para a pergunta de referência."
     )
 
-# Criação das Perguntas
-area = 'Marketing'
-qtd_perguntas = 8
+# # Criação das Perguntas
+# area = 'Marketing'
+# qtd_perguntas = 8
 
 def gerar_perguntas(area: str, qtd_perguntas: int) -> List[str]:
     """

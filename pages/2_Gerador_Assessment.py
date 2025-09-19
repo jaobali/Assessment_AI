@@ -1,6 +1,5 @@
 import streamlit as st
-from agent_gerador_assessment import gerar_perguntas, gerar_niveis_maturidade
-from app_chat_avaliacao import chat_with_ai
+from agents.agent_gerador_assessment import gerar_perguntas, gerar_niveis_maturidade
 
 # Interface Streamlit simplificada para demonstração
 st.set_page_config(page_title="Gerador de Assessment Lean", page_icon="📊", layout="wide")
@@ -9,22 +8,6 @@ st.set_page_config(page_title="Gerador de Assessment Lean", page_icon="📊", la
 if 'current_page' not in st.session_state:
     st.session_state.current_page = "assessment"
 
-# Sidebar para navegação
-st.sidebar.title("Navegação")
-page = st.sidebar.radio(
-    "Ir para:", ["Gerador de Assessment", "Chat com IA"],
-    index=0 if st.session_state.current_page == "assessment" else 1,
-    key="navigation"
-)
-
-# Atualizar página atual com base na seleção
-if page == "Gerador de Assessment":
-    st.session_state.current_page = "assessment"
-else:
-    st.session_state.current_page = "chat"
-
-# Sidebar para configurações (apenas na página de assessment)
-st.sidebar.markdown("---")
 
 # Inicializar variáveis de sessão
 if 'perguntas_geradas' not in st.session_state:

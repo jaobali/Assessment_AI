@@ -26,7 +26,7 @@ class PerguntaResumo(BaseModel):
 
 def gerador_mensagem_chat(df):
     total_perguntas = df['perguntas'].unique()
-    perguntas_utilizadas = total_perguntas[:2]
+    perguntas_utilizadas = total_perguntas[:3]
     instructions = '''
     Você é um especialista em Lean Management e em avaliação de maturidade de processos organizacionais.
     Foi criado um assessment e sua tarefa é avaliar as perguntas desse assessment.
