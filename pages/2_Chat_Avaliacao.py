@@ -56,7 +56,6 @@ if st.session_state.selected_assessment and st.session_state.df_assessment is no
             for p in perguntas:
                 niveis = df.loc[df['perguntas'] == p]
                 st.markdown(f'#### {p}')
-                # st.write(f'Níveis:')
                 st.dataframe(niveis[['niveis']])
 
             if st.button("Iniciar Assessment"):
@@ -116,7 +115,7 @@ if st.session_state.selected_assessment and st.session_state.df_assessment is no
                     st.rerun()
     else:
         st.markdown('Fim do assessment. Resultado final:')
-        st.write(st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates())
+        st.write(st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates().reset_index(drop=True))
         import io
         buffer = io.BytesIO()
         st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates().to_excel(buffer, index=False)
