@@ -65,6 +65,7 @@ if st.session_state.selected_assessment and st.session_state.df_assessment is no
                     {"role": "assistant",
                     "content": gerador_mensagem_chat(st.session_state.df_assessment.loc[st.session_state.df_assessment['nota'] == 0])}
                 ]
+                st.rerun()
         if "assessment_iniciado" in st.session_state:
             # Exibição do histórico de mensagens
             for message in st.session_state.messages:
@@ -116,10 +117,13 @@ if st.session_state.selected_assessment and st.session_state.df_assessment is no
     else:
         st.markdown('Fim do assessment. Resultado final:')
         st.write(st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates())
-        resultado_excel = st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates().to_excel(index=False)
+        import io
+        buffer = io.BytesIO()
+        st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates().to_excel(buffer, index=False)
+        buffer.seek(0)
         st.download_button(
             label="Baixar resultado em Excel",
-            data=resultado_excel,
+            data=buffer,
             file_name="resultado_assessment.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
