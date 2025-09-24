@@ -10,7 +10,5 @@ st.write("# Bem-vindo ao Assessment AI! 👋")
 st.markdown(
     '''
     **👈 Selecione uma demonstração na barra lateral** para conhecer as funcionalidades do Assessment AI.
-    ### Quer saber mais?
-    - Visite nosso [repositório no GitHub](https://github.com/JooManc/Assessment_AI)
 '''
 )
