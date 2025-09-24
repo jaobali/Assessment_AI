@@ -105,8 +105,3 @@ if st.session_state.selected_assessment and st.session_state.df_assessment is no
     else:
         st.markdown('Fim do assessment. Resultado final:')
         st.write(st.session_state.df_assessment[['perguntas', 'nota']].drop_duplicates())
-
-
-
-
-
