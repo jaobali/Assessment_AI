@@ -7,8 +7,6 @@ st.set_page_config(
 
 st.write("# Bem-vindo ao Assessment AI! 👋")
 
-st.sidebar.success("Selecione uma demonstração acima.")
-
 st.markdown(
     '''
     **👈 Selecione uma demonstração na barra lateral** para conhecer as funcionalidades do Assessment AI.
