@@ -23,32 +23,35 @@ if "df_assessment" not in st.session_state:
 if st.session_state.selected_assessment is None:
     st.subheader("Escolha o assessment que deseja responder")
 
+# st.write(st.session_state)
+
 # Criação do menu lateral
 with st.sidebar:
-    st.title("Assessments Disponíveis")
-    
-    # Caminho para a pasta de assessments
-    assessments_path = os.path.join(os.getcwd(), "Assessments")
-    
-    # Busca por arquivos de assessment
-    assessment_files = glob.glob(os.path.join(assessments_path, "*.xlsx"))
-    
-    # Lista os arquivos disponíveis
-    if assessment_files:
-        for file_path in assessment_files:
-            file_name = os.path.basename(file_path)
-            file_name_limpo = file_name.replace("assessment_", "").replace(".xlsx", "")
-            if st.button(file_name_limpo):
-                # Carrega o assessment selecionado e armazena na sessão
-                st.session_state.selected_assessment = file_name
-                st.session_state.df_assessment = pd.read_excel(file_path)
-                st.session_state.df_assessment['nota'] = 0
-                st.rerun()  # Recarrega a página para mostrar o chat
+    if "messages" not in st.session_state or st.session_state.messages == []:
+        st.title("Assessments Disponíveis")
+
+        # Caminho para a pasta de assessments
+        assessments_path = os.path.join(os.getcwd(), "Assessments")
+        # Busca por arquivos de assessment
+        assessment_files = glob.glob(os.path.join(assessments_path, "*.xlsx"))
+
+        # Lista os arquivos disponíveis
+        if assessment_files:
+            for file_path in assessment_files:
+                file_name = os.path.basename(file_path)
+                file_name_limpo = file_name.replace("assessment_", "").replace(".xlsx", "")
+
+                if st.button(file_name_limpo):
+                    # Carrega o assessment selecionado e armazena na sessão
+                    st.session_state.selected_assessment = file_name
+                    st.session_state.df_assessment = pd.read_excel(file_path)
+                    st.session_state.df_assessment['nota'] = 0
+                    st.rerun()  # Recarrega a página para mostrar o chat
 
 if st.session_state.selected_assessment and st.session_state.df_assessment is not None:
     if 0 in st.session_state.df_assessment['nota'].unique():
         # Inicialização do histórico de mensagens na sessão
-        if "messages" not in st.session_state:
+        if "messages" not in st.session_state or st.session_state.messages == []:
             # Inicializa com a mensagem de boas-vindas do assistente
             st.markdown("## Perguntas e níveis do assessment escolhido:")
             df = st.session_state.df_assessment
